@@ -831,7 +831,7 @@
     <!-- Password Modal -->
     <div id="passwordModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">Admin Access</div>
+            <div class="modal-header">🔐 Admin Access</div>
             <div id="errorMessage" class="error-message" style="display: none;"></div>
             <form class="modal-form" onsubmit="handlePasswordSubmit(event)">
                 <input type="password" id="passwordInput" placeholder="Enter password" required autofocus>
@@ -866,7 +866,7 @@
             <div class="featured-essay">
                 <div class="empty-state-icon">✝️</div>
                 <p class="empty-state-text">No featured essay yet. Create your first essay to inspire others.</p>
-                <a href="#" class="read-more-btn" onclick="navigateTo('essays')">Browse Essays</a>
+                <a href="#" class="read-more-btn" onclick="navigateTo('essays'); return false;">Browse Essays</a>
             </div>
 
             <!-- About Section -->
@@ -895,7 +895,7 @@
 
             <!-- Add Essay Button -->
             <div style="text-align: center; margin-bottom: 2rem;">
-                <button class="add-essay-btn" onclick="openPasswordModal()">+ Add New Essay</button>
+                <button class="add-essay-btn" onclick="openPasswordModal(); return false;">+ Add New Essay</button>
             </div>
 
             <!-- Topics Filter -->
@@ -991,7 +991,7 @@
     <!-- ADD ESSAY PAGE -->
     <div id="add-essay" class="page">
         <div class="container">
-            <a href="#" class="back-link" onclick="navigateTo('essays')">&larr; Back to Essays</a>
+            <a href="#" class="back-link" onclick="navigateTo('essays'); return false;">&larr; Back to Essays</a>
             <h2 style="text-align: center;">Write a New Essay</h2>
             <div class="contact-section" style="max-width: 800px;">
                 <form class="contact-form" onsubmit="handleAddEssay(event)">
@@ -1027,7 +1027,7 @@
     <!-- ESSAY READING PAGE -->
     <div id="essay-reader" class="page">
         <div class="container">
-            <a href="#" class="back-link" onclick="navigateTo('essays')">&larr; Back to Essays</a>
+            <a href="#" class="back-link" onclick="navigateTo('essays'); return false;">&larr; Back to Essays</a>
             <div class="essay-reading" id="essayContent">
                 <!-- Essay content will be populated by JavaScript -->
             </div>
@@ -1080,7 +1080,6 @@
 
         // Password Modal Functions
         function openPasswordModal() {
-            event.preventDefault();
             document.getElementById('passwordModal').style.display = 'block';
             document.getElementById('passwordInput').value = '';
             document.getElementById('errorMessage').style.display = 'none';
@@ -1098,7 +1097,14 @@
             if (password === ADMIN_PASSWORD) {
                 isAuthenticated = true;
                 closePasswordModal();
-                navigateTo('add-essay');
+                // Navigate to add-essay page
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById('add-essay').classList.add('active');
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
             } else {
                 const errorMsg = document.getElementById('errorMessage');
                 errorMsg.textContent = 'Incorrect password. Please try again.';
@@ -1118,8 +1124,6 @@
 
         // Navigate to pages
         function navigateTo(pageId) {
-            event.preventDefault();
-
             // Check if trying to access add-essay page without authentication
             if (pageId === 'add-essay' && !isAuthenticated) {
                 openPasswordModal();
@@ -1175,7 +1179,7 @@
                         <h3>${essay.title}</h3>
                         <div class="essay-meta">${essay.date}</div>
                         <p>${essay.excerpt}</p>
-                        <a href="#" onclick="showEssay('${essay.id}')">Read Full Essay →</a>
+                        <a href="#" onclick="showEssay('${essay.id}'); return false;">Read Full Essay →</a>
                     </div>
                 `).join('');
             }
@@ -1183,8 +1187,6 @@
 
         // Show essay
         function showEssay(essayId) {
-            event.preventDefault();
-
             const essay = essays.find(e => e.id === essayId);
             if (!essay) return;
 
@@ -1201,7 +1203,11 @@
                 </div>
             `;
 
-            navigateTo('essay-reader');
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById('essay-reader').classList.add('active');
+            window.scrollTo(0, 0);
         }
 
         // Handle add essay form submission
@@ -1225,7 +1231,7 @@
             event.target.reset();
 
             // Show success message
-            alert('Essay published successfully!');
+            alert('✅ Essay published successfully!');
 
             // Reset authentication
             isAuthenticated = false;
