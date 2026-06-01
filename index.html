@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflections of Faith - Essays on Catholic Spirituality</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Color Palette */
+        :root {
+            --primary-dark: #1a3a52;
+            --primary-burgundy: #6b3e3a;
+            --accent-gold: #d4af37;
+            --light-bg: #f5f3f0;
+            --text-dark: #2c2c2c;
+            --text-light: #666;
+        }
+
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            line-height: 1.8;
+            color: var(--text-dark);
+            background-color: var(--light-bg);
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: var(--primary-dark);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-brand span {
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--accent-gold);
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Toggle */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--accent-gold);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-burgundy) 100%);
+            color: #fff;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 5px solid var(--accent-gold);
+            margin-bottom: 3rem;
+            border-radius: 5px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.95;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Section Headers */
+        h2 {
+            font-size: 2.5rem;
+            color: var(--primary-burgundy);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--accent-gold);
+            position: relative;
+        }
+
+        h2::before {
+            content: '✦';
+            display: block;
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: var(--primary-dark);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Featured Essay Section */
+        .featured-essay {
+            background: #fff;
+            padding: 3rem;
+            border-left: 5px solid var(--accent-gold);
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+        }
+
+        .featured-essay-tag {
+            display: inline-block;
+            background-color: var(--primary-burgundy);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .featured-essay h3 {
+            margin-top: 0.5rem;
+        }
+
+        .featured-essay .essay-meta {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .featured-essay .essay-excerpt {
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .read-more-btn {
+            display: inline-block;
+            background-color: var(--primary-burgundy);
+            color: #fff;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-burgundy);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .read-more-btn:hover {
+            background-color: transparent;
+            color: var(--primary-burgundy);
+            transform: translateX(5px);
+        }
+
+        /* About Section */
+        .about-section {
+            background: #fff;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .about-text {
+            line-height: 1.9;
+        }
+
+        .about-image {
+            text-align: center;
+            font-size: 5rem;
+            opacity: 0.7;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-burgundy) 100%);
+            color: #fff;
+            padding: 3rem;
+            text-align: center;
+            margin: 3rem 0;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-section::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 8rem;
+            opacity: 0.1;
+            font-family: Georgia, serif;
+        }
+
+        .quote-text {
+            font-size: 1.8rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            line-height: 2;
+        }
+
+        .quote-author {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            letter-spacing: 1px;
+        }
+
+        /* Essays Grid */
+        .essays-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .essay-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--accent-gold);
+        }
+
+        .essay-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .essay-card-category {
+            display: inline-block;
+            background-color: var(--primary-burgundy);
+            color: #fff;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .essay-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .essay-card .essay-meta {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .essay-card p {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .essay-card a {
+            color: var(--primary-burgundy);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .essay-card a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Topics Filter */
+        .topics-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .topic-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--primary-burgundy);
+            background: transparent;
+            color: var(--primary-burgundy);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: Georgia, serif;
+            letter-spacing: 0.5px;
+        }
+
+        .topic-btn:hover,
+        .topic-btn.active {
+            background-color: var(--primary-burgundy);
+            color: #fff;
+        }
+
+        /* Essay Reading View */
+        .essay-reading {
+            background: #fff;
+            padding: 4rem;
+            border-radius: 5px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 2;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .essay-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--accent-gold);
+        }
+
+        .essay-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-burgundy);
+            margin-bottom: 1rem;
+        }
+
+        .essay-header .essay-meta {
+            color: var(--text-light);
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        .essay-body {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        .essay-body p {
+            margin-bottom: 1.8rem;
+            text-align: justify;
+        }
+
+        .essay-body h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .catholic-motif {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--accent-gold);
+            margin: 2rem 0;
+            opacity: 0.6;
+        }
+
+        /* Back Button */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-burgundy);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-section h2 {
+            text-align: center;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary-burgundy);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid var(--accent-gold);
+            border-radius: 3px;
+            font-family: Georgia, serif;
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 200px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-burgundy);
+            box-shadow: 0 0 10px rgba(107, 62, 58, 0.1);
+        }
+
+        .submit-btn {
+            background-color: var(--primary-burgundy);
+            color: #fff;
+            padding: 1rem;
+            border: none;
+            border-radius: 3px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-family: Georgia, serif;
+            letter-spacing: 1px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.95rem;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                flex-direction: column;
+                background-color: var(--primary-dark);
+                padding: 1rem;
+                border-radius: 5px;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .about-section {
+                grid-template-columns: 1fr;
+            }
+
+            .essays-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quote-text {
+                font-size: 1.4rem;
+            }
+
+            .essay-reading {
+                padding: 2rem;
+            }
+
+            .essay-header h1 {
+                font-size: 2rem;
+            }
+
+            .topics-filter {
+                gap: 0.5rem;
+            }
+
+            .topic-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1.4rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .featured-essay {
+                padding: 1.5rem;
+            }
+
+            .essay-reading {
+                padding: 1.5rem;
+            }
+
+            .essay-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .essay-body {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span>✦</span> Reflections of Faith
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-page="essays">Essays</a></li>
+                <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <div class="container">
+            <!-- Hero Section -->
+            <div class="hero">
+                <h1>Reflections of Faith</h1>
+                <p>Exploring the depths of Catholic spirituality and tradition</p>
+                <p class="hero-subtitle">Essays on prayer, sacraments, Marian devotion, and the spiritual life</p>
+            </div>
+
+            <!-- Saint's Quote -->
+            <div class="quote-section">
+                <p class="quote-text">
+                    "The Rosary is the 'summary of the entire Gospel.' It touches the depths of the mystery of salvation and the human heart with the power of God's love."
+                </p>
+                <p class="quote-author">— St. John Paul II</p>
+            </div>
+
+            <!-- Featured Essay -->
+            <h2>Featured Essay</h2>
+            <div class="featured-essay">
+                <span class="featured-essay-tag">Marian Devotion</span>
+                <h3>The Tender Heart of Mary: Understanding Marian Theology</h3>
+                <div class="essay-meta">Published June 1, 2026 • 8 min read</div>
+                <div class="essay-excerpt">
+                    <p>
+                        Mary holds a unique and profound place in Catholic theology and devotion. As the Mother of Jesus Christ and the Mother of the Church, she serves as a model of faith, humility, and profound spiritual maturity. Her role transcends simple biological motherhood; it encompasses a spiritual motherhood that extends to all believers throughout history.
+                    </p>
+                    <p>
+                        The doctrine of the Immaculate Conception teaches us that Mary was conceived without the stain of original sin, making her the perfect vessel for the Incarnation. This singular grace, granted by God's foreknowledge and mercy, prepared her uniquely to be the Mother of our Lord. Her perpetual virginity, affirmed throughout the centuries by the Church, speaks to her complete dedication to God's will and her extraordinary role in salvation history.
+                    </p>
+                </div>
+                <a href="#" class="read-more-btn" onclick="showEssay('marian-theology')">Read Full Essay</a>
+            </div>
+
+            <!-- About Section -->
+            <h2>About the Author</h2>
+            <div class="about-section">
+                <div class="about-text">
+                    <p>
+                        Welcome to my corner of the internet, where faith meets reflection and tradition meets contemporary contemplation. I am a Catholic writer devoted to exploring the rich tapestry of Catholic spirituality, theology, and the everyday lived experience of faith.
+                    </p>
+                    <p>
+                        Through these essays, I aim to illuminate the beauty of Catholic teaching—from the Sacraments that sustain us, to the example of the Saints who inspire us, to the ancient practices of prayer that connect us to generations of believers. My hope is that these reflections might deepen your own faith journey and draw you closer to the heart of Christ, through the intercession of His most holy Mother.
+                    </p>
+                    <p>
+                        May our Lady guide us always in our pursuit of holiness and peace.
+                    </p>
+                </div>
+                <div class="about-image">✝️</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ESSAYS PAGE -->
+    <div id="essays" class="page">
+        <div class="container">
+            <h2>Essays</h2>
+
+            <!-- Topics Filter -->
+            <div class="topics-filter">
+                <button class="topic-btn active" data-topic="all">All Topics</button>
+                <button class="topic-btn" data-topic="marian">Marian Devotion</button>
+                <button class="topic-btn" data-topic="sacraments">The Sacraments</button>
+                <button class="topic-btn" data-topic="prayer">Prayer</button>
+                <button class="topic-btn" data-topic="history">Church History</button>
+                <button class="topic-btn" data-topic="spiritual">Spiritual Life</button>
+            </div>
+
+            <!-- Essays Grid -->
+            <div class="essays-grid" id="essaysGrid">
+                <!-- Essays will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="about" class="page">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-section" style="grid-template-columns: 1fr;">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <div style="font-size: 8rem; opacity: 0.6; margin-bottom: 1rem;">✝️</div>
+                    <h3 style="border: none; padding: 0;">A Journey of Faith and Scholarship</h3>
+                </div>
+                <div>
+                    <p>
+                        I have spent the last fifteen years studying Catholic theology, spirituality, and Church history. My academic background includes degrees in Theology and Sacred Scripture, and I continue to deepen my understanding through study, prayer, and conversation with spiritual directors and fellow faithful.
+                    </p>
+                    <p>
+                        This website exists as a fruit of that ongoing journey. I write not as an authority, but as a fellow pilgrim seeking to understand the mysteries of our faith and to share what I have learned along the way. My desire is to make the riches of Catholic teaching accessible to those who hunger for deeper spiritual nourishment.
+                    </p>
+                    <p>
+                        The essays here cover a range of topics—from the beauty of the Sacraments and the devotion to our Blessed Mother, to reflections on prayer, Church history, and the pursuit of holiness in our modern world. Each essay is written with the hope that it might serve as a stepping stone in your own spiritual journey.
+                    </p>
+                    <h3 style="margin-top: 2rem;">My Mission</h3>
+                    <p>
+                        To illuminate the treasures of Catholic faith and to help readers discover or deepen their relationship with Christ through understanding His teachings, His Church, and the communion of Saints. Through careful study and heartfelt reflection, I hope to demonstrate that Catholic spirituality is not distant or irrelevant, but deeply alive and profoundly applicable to our lives today.
+                    </p>
+                    <h3 style="margin-top: 2rem;">In Communion with the Church</h3>
+                    <p>
+                        All of my writing is offered in communion with the Catholic Church and in submission to her Magisterium. I am deeply grateful to the Fathers of the Church, to the Doctors of the Church, and to the lived witness of countless saints whose writings and examples have shaped my understanding. May everything here serve to build up the Church and to bring souls closer to Christ.
+                    </p>
+                </div>
+            </div>
+
+            <div class="quote-section">
+                <p class="quote-text">
+                    "I have not yet reached the measure of the fullness, but by forgetting what lies behind and straining forward to what lies ahead, I press on toward the goal for the prize of the heavenly call of God in Christ Jesus."
+                </p>
+                <p class="quote-author">— Philippians 3:12-14 (adapted)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+        <div class="container">
+            <h2 style="text-align: center;">Get in Touch</h2>
+            <div class="contact-section">
+                <form class="contact-form" onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ESSAY READING PAGE -->
+    <div id="essay-reader" class="page">
+        <div class="container">
+            <a href="#" class="back-link" onclick="backToEssays()">&larr; Back to Essays</a>
+            <div class="essay-reading" id="essayContent">
+                <!-- Essay content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Reflections of Faith. All rights reserved. | A journey in faith through the Catholic tradition</p>
+        <p style="font-size: 0.9rem; margin-top: 1rem;">✦ In communion with the Church ✦</p>
+    </footer>
+
+    <script>
+        // Essays Data
+        const essays = [
+            {
+                id: 'marian-theology',
+                title: 'The Tender Heart of Mary: Understanding Marian Theology',
+                category: 'Marian Devotion',
+                topic: 'marian',
+                date: 'June 1, 2026',
+                readTime: '8 min read',
+                excerpt: 'Mary holds a unique and profound place in Catholic theology and devotion. As the Mother of Jesus Christ and the Mother of the Church, she serves as a model of faith, humility, and profound spiritual maturity.',
+                content: `
+                    <div class="essay-header">
+                        <h1>The Tender Heart of Mary: Understanding Marian Theology</h1>
+                        <div class="essay-meta">June 1, 2026 • 8 min read</div>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                    </div>
+                    <div class="essay-body">
+                        <p>
+                            Mary holds a unique and profound place in Catholic theology and devotion. As the Mother of Jesus Christ and the Mother of the Church, she serves as a model of faith, humility, and profound spiritual maturity. Her role transcends simple biological motherhood; it encompasses a spiritual motherhood that extends to all believers throughout history.
+                        </p>
+                        <p>
+                            The doctrine of the Immaculate Conception teaches us that Mary was conceived without the stain of original sin, making her the perfect vessel for the Incarnation. This singular grace, granted by God's foreknowledge and mercy, prepared her uniquely to be the Mother of our Lord. Her perpetual virginity, affirmed throughout the centuries by the Church, speaks to her complete dedication to God's will and her extraordinary role in salvation history.
+                        </p>
+                        <h3>The Fiat: Mary's Perfect Surrender</h3>
+                        <p>
+                            When the Angel Gabriel announced God's plan that she would bear the Son of the Most High, Mary's response was one of complete trust: "Behold, I am the handmaid of the Lord; let it be done to me according to your word" (Luke 1:38). This fiat—this yes—was not a moment of blind obedience, but a conscious, loving surrender to God's will that changed the course of human history.
+                        </p>
+                        <p>
+                            In our own lives, we are called to emulate this surrender. How often do we resist God's will through fear, pride, or attachment to our own plans? Mary teaches us that true freedom lies in saying yes to God, in trusting His providence even when we cannot see the full picture.
+                        </p>
+                        <h3>Mother of Sorrows, Mother of Consolation</h3>
+                        <p>
+                            Mary's heart was pierced with sorrow at the foot of the Cross. Standing beside her dying Son, she endured what must be the deepest possible maternal anguish. Yet in her suffering, she intercedes for us. She understands our pain because she has known profound suffering. This is why the Catholic tradition has always turned to Mary in our sorrows—she accompanies us in our trials.
+                        </p>
+                        <p>
+                            The Stabat Mater, that ancient hymn, expresses the Church's meditation on Mary's suffering:
+                        </p>
+                        <p style="text-align: center; font-style: italic;">
+                            "At the cross her station keeping,<br>
+                            Stood the mournful mother weeping,<br>
+                            Close to Jesus at the last."
+                        </p>
+                        <p>
+                            In this mystery, we find consolation. We are not alone in our suffering. Mary stands with us, as she stood beneath the Cross, interceding before her Son.
+                        </p>
+                        <h3>Living Marian Devotion Today</h3>
+                        <p>
+                            Devotion to Mary is not a distraction from Christ; rather, it is a pathway to Him. As Vatican II teaches, Mary is "a sign of sure hope and solace to the pilgrim People of God." To honor Mary is to say yes to the role she played in salvation history and to ask her assistance in our own journey toward holiness.
+                        </p>
+                        <p>
+                            The Rosary remains one of the most powerful means of Marian prayer. In contemplating the mysteries of Christ's life through Mary's eyes—the Annunciation, the Visitation, the Nativity, the Crucifixion, the Resurrection—we enter into the depths of Gospel truth. Each Ave Maria and Pater Noster becomes a stepping stone deeper into the mystery of Christ.
+                        </p>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                        <p>
+                            Mary invites us always to her Son. She is the model of the listening heart, the heart that ponders the mysteries of God in silence and faith. May we strive to emulate her virtue, her humility, and her unwavering trust. And may we never forget that we have in her a Mother in heaven, interceding tirelessly for our conversion and our eternal salvation.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 'rosary-prayer',
+                title: 'The Rosary: Encountering Christ Through Mary',
+                category: 'Prayer',
+                topic: 'prayer',
+                date: 'May 15, 2026',
+                readTime: '10 min read',
+                excerpt: 'The Rosary is one of the most ancient and powerful prayers of the Catholic Church. Through its simple repetition of Hail Marys and Our Fathers, it opens the heart to the mysteries of Christ\'s redemptive work.',
+                content: `
+                    <div class="essay-header">
+                        <h1>The Rosary: Encountering Christ Through Mary</h1>
+                        <div class="essay-meta">May 15, 2026 • 10 min read</div>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                    </div>
+                    <div class="essay-body">
+                        <p>
+                            The Rosary stands as one of the most ancient and profound prayers of the Catholic tradition. Yet to the modern ear, especially to those unfamiliar with Catholic practice, it can seem simplistic or even repetitive. How can the same prayers, repeated over and over, lead to deeper spiritual understanding? The answer lies not in the novelty of the words, but in the richness of the mysteries upon which we meditate.
+                        </p>
+                        <h3>The Structure of Prayer</h3>
+                        <p>
+                            The Rosary consists of 20 mysteries, divided into four sets of five: the Joyful Mysteries, the Sorrowful Mysteries, the Glorious Mysteries, and the Luminous Mysteries (added by Pope John Paul II). Each mystery invites us to contemplate a central event in the life of Christ, through the eyes of His Mother Mary.
+                        </p>
+                        <p>
+                            As we pray the Rosary, our lips are engaged in prayer—the Our Father, the Hail Mary, the Glory Be—while our minds are invited to ponder the mysteries these prayers celebrate. This dual engagement—of body, voice, and mind—creates a holistic prayer experience that can lead to profound spiritual transformation.
+                        </p>
+                        <h3>The Power of Repetition</h3>
+                        <p>
+                            In our modern world of endless novelty and constant stimulation, the repetitive nature of the Rosary can seem antithetical to genuine prayer. Yet the Church has always known something profound: that in repetition, there is a kind of deepening. Consider a mother who sings the same lullaby to her child night after night. The repetition does not diminish the song; rather, it deepens both the relationship and the transformation the song works in the heart.
+                        </p>
+                        <p>
+                            Similarly, as we pray the Rosary day after day, our hearts become more attuned to its rhythms. New insights emerge; old truths strike us with new force. The repetitive prayers become like a familiar path through a forest—the more we walk it, the more we notice its beauty.
+                        </p>
+                        <h3>Meditation on the Mysteries</h3>
+                        <p>
+                            The Joyful Mysteries—the Annunciation, the Visitation, the Nativity, the Presentation, and the Finding of the Child Jesus in the Temple—invite us to contemplate God's entrance into human history with joy and wonder. In these mysteries, we see God's humility and His identification with our humanity.
+                        </p>
+                        <p>
+                            The Sorrowful Mysteries—the Agony in the Garden, the Scourging at the Pillar, the Crowning with Thorns, the Carrying of the Cross, and the Crucifixion—call us to enter into the mystery of redemptive suffering. Here, Christ's passion becomes not merely a historical event, but a present reality in which we are invited to participate through the offering of our own sufferings.
+                        </p>
+                        <p>
+                            The Glorious Mysteries—the Resurrection, the Ascension, the Descent of the Holy Spirit, the Assumption of Mary, and the Coronation of Mary—reveal the triumph of Christ and the ultimate victory over sin and death. These mysteries nourish our hope and remind us of the resurrection life to which we are called.
+                        </p>
+                        <h3>A Prayer for Our Times</h3>
+                        <p>
+                            In a world marked by fragmentation, anxiety, and noise, the Rosary offers us something precious: a return to simplicity, to the contemplation of eternal truths, and to communion with the communion of Saints. When we pray the Rosary, we join our voice to the voices of millions throughout history and across the world who have found in this prayer a source of consolation, strength, and transformation.
+                        </p>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                        <p>
+                            Whether you are new to the Rosary or have prayed it for decades, I encourage you to return to it, to slow down with it, and to allow its mysteries to speak to your heart. In the Rosary, we find not mere words, but a pathway to the heart of Christ, guided by the tender intercession of His Mother.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 'sacrament-eucharist',
+                title: 'The Eucharist: The Source and Center of Christian Life',
+                category: 'The Sacraments',
+                topic: 'sacraments',
+                date: 'April 30, 2026',
+                readTime: '9 min read',
+                excerpt: 'The Eucharist is the summit and source of Christian life. In the mystery of transubstantiation, bread and wine become the Body and Blood of Christ.',
+                content: `
+                    <div class="essay-header">
+                        <h1>The Eucharist: The Source and Center of Christian Life</h1>
+                        <div class="essay-meta">April 30, 2026 • 9 min read</div>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                    </div>
+                    <div class="essay-body">
+                        <p>
+                            "The Eucharist is the source and center of Christian life," proclaims Vatican II, in words that capture the profound centrality of this sacrament in Catholic faith and practice. To understand the Eucharist is to understand the heart of what it means to be Catholic, to be united to Christ and to His Church.
+                        </p>
+                        <h3>The Incarnation Continues</h3>
+                        <p>
+                            In the Eucharist, the Incarnation—God becoming human in Christ—continues in a mystical way. The same Christ who walked the earth, who performed miracles, who died and rose again, becomes present to us under the species of bread and wine. This is not a symbol or a mere memorial; it is a true and substantial presence, the doctrine of transubstantiation, which the Church has maintained since the earliest centuries.
+                        </p>
+                        <h3>Nourishment for the Soul</h3>
+                        <p>
+                            As bread and wine nourish our bodily life, so too the Eucharist nourishes our spiritual life. When we receive the Body and Blood of Christ in Communion, we are united to Him in an intimate way. We are transformed by receiving Him; we become, in a sense, more fully incorporated into His Body, the Church. This union is not merely spiritual in the abstract sense; it is personal and transformative.
+                        </p>
+                        <p>
+                            The great doctor of the Church, St. Thomas Aquinas, wrote of the Eucharist: "O salutary victim, opening the gates of heaven to man below!" In the Eucharist, we encounter the very source of salvation. Every reception of Holy Communion is an encounter with Christ's redemptive love.
+                        </p>
+                        <h3>Participation in the Sacrifice</h3>
+                        <p>
+                            The Mass is not merely a re-enactment of the Last Supper, nor is it simply a commemoration of Christ's Passion. Rather, it is a participation in the one sacrifice of Christ offered on Calvary. When we attend Mass, we are lifted into heaven itself, joining our voices with the angels and saints in giving glory to God. The priest acts in the person of Christ (in persona Christi), and through his words of consecration, bread and wine become the Body and Blood of Christ.
+                        </p>
+                        <h3>Living the Eucharist</h3>
+                        <p>
+                            But receiving the Eucharist is not the end of the spiritual journey; it is a beginning. We receive the Body of Christ so that we ourselves might become the Body of Christ—the living, breathing presence of Christ in the world. Our eucharistic devotion should flow out into works of charity, justice, and love. When we encounter Christ in the Eucharist, we are called to go forth and encounter Him in the hungry, the thirsty, the naked, the imprisoned, the sick, and the stranger.
+                        </p>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                        <p>
+                            Whether in the daily Mass, in eucharistic adoration, or in moments of profound reverence before the tabernacle, the Eucharist invites us into the deepest mystery of our faith and the most intimate union with Christ. May we approach this sacrament with awe, gratitude, and a commitment to let it transform us into living bread for the world.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 'saint-thomas-aquinas',
+                title: 'St. Thomas Aquinas: The Doctor Angelicus and the Pursuit of Wisdom',
+                category: 'Church History',
+                topic: 'history',
+                date: 'April 10, 2026',
+                readTime: '7 min read',
+                excerpt: 'St. Thomas Aquinas represents the pinnacle of medieval Catholic theology. His synthesis of Aristotelian philosophy and Christian revelation has shaped Church teaching for over 700 years.',
+                content: `
+                    <div class="essay-header">
+                        <h1>St. Thomas Aquinas: The Doctor Angelicus and the Pursuit of Wisdom</h1>
+                        <div class="essay-meta">April 10, 2026 • 7 min read</div>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                    </div>
+                    <div class="essay-body">
+                        <p>
+                            In the annals of Catholic history and theology, few figures loom as large as St. Thomas Aquinas. Born in Italy in 1225 to a noble family, Thomas became a Dominican friar and devoted himself entirely to the pursuit of truth through reason illuminated by faith. His work, particularly his monumental Summa Theologiae, represents the high point of medieval Catholic theology and continues to be studied and revered by theologians and philosophers to this day.
+                        </p>
+                        <h3>Integrating Reason and Faith</h3>
+                        <p>
+                            Thomas lived during a time when the works of Aristotle, long lost to the Western world, were being recovered and transmitted through Arabic and Jewish sources. This created both an opportunity and a challenge for Christian theology. Some saw Aristotle as a threat to faith; others were uncertain how his philosophy could be integrated with Christian teaching.
+                        </p>
+                        <p>
+                            Thomas, with his characteristic genius, saw in Aristotle not a threat but a companion in the search for truth. His great insight was that reason and faith are not opposed but complementary. Both come from God, and truth cannot contradict truth. He therefore undertook the immense task of synthesizing Aristotelian philosophy with Christian revelation, creating a theological synthesis that has never been surpassed.
+                        </p>
+                        <h3>The Summa Theologiae</h3>
+                        <p>
+                            The Summa Theologiae, Thomas's greatest work, is a compendium of Catholic theology organized with systematic rigor. It addresses fundamental questions: What is God's nature? How do we know God exists? What is the human person? What is virtue? What are the sacraments? On every page, Thomas demonstrates a penetrating intelligence, a deep reverence for revealed truth, and an unwavering commitment to the integration of reason and faith.
+                        </p>
+                        <h3>Thomas Today</h3>
+                        <p>
+                            In our modern age, marked by a certain fragmentation between faith and reason, the example of St. Thomas is particularly valuable. He shows us that the pursuit of intellectual truth is not opposed to holiness; rather, it can be a path to sanctity. To understand creation more deeply is to understand the Creator more intimately. To think carefully and rigorously about faith is not to diminish it but to deepen it.
+                        </p>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                        <p>
+                            Thomas teaches us that we need not fear the truth, wherever it is found. His patronage of students and scholars continues to inspire those who seek to grow in both faith and understanding. In a world often divided between fundamentalism on one hand and rationalism on the other, St. Thomas Aquinas offers a third way—the way of synthesis, integration, and the pursuit of wisdom illuminated by grace.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 'spiritual-combat',
+                title: 'Spiritual Combat: Virtues and the Interior Life',
+                category: 'Spiritual Life',
+                topic: 'spiritual',
+                date: 'March 28, 2026',
+                readTime: '9 min read',
+                excerpt: 'The spiritual life is not a passive state but an active engagement in the struggle between grace and sin. Through virtue and prayer, we grow in holiness.',
+                content: `
+                    <div class="essay-header">
+                        <h1>Spiritual Combat: Virtues and the Interior Life</h1>
+                        <div class="essay-meta">March 28, 2026 • 9 min read</div>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                    </div>
+                    <div class="essay-body">
+                        <p>
+                            St. Paul wrote to the Ephesians: "Put on the whole armor of God, that you may be able to withstand in the evil day" (Eph 6:11). This metaphor of spiritual combat captures an essential truth about the Christian life: that our journey toward holiness is not merely a gentle ascent, but an active struggle against sin, temptation, and the enemies of our souls.
+                        </p>
+                        <h3>Understanding Sin and Temptation</h3>
+                        <p>
+                            Temptation is not sin; rather, it is an invitation to sin. Our Lord Himself was tempted in the desert (Matt 4:1-11), yet He did not sin. What matters is how we respond to temptation. Do we yield to it, or do we resist it through grace?
+                        </p>
+                        <p>
+                            The enemies we face are threefold: the devil, the world, and the flesh. The devil actively works to corrupt us; the world offers seductive false values; and our own disordered desires wage war against us. This is not pessimism but realism about the human condition after sin.
+                        </p>
+                        <h3>The Armor of Virtue</h3>
+                        <p>
+                            How do we resist? Through virtue—those habits of goodness that enable us to act rightly. The cardinal virtues—prudence, justice, temperance, and fortitude—form the foundation of spiritual strength. The theological virtues—faith, hope, and charity—unite us to God and enable us to live as His children.
+                        </p>
+                        <p>
+                            Virtue is not rigid legalism; rather, it is the gradual transformation of our hearts and wills toward goodness. When we practice charity, we become more loving. When we practice courage, we become braver. These virtues are not abstract ideals but lived realities that shape who we become.
+                        </p>
+                        <h3>Prayer and the Sacraments</h3>
+                        <p>
+                            In our spiritual combat, we are not alone. We have been given powerful weapons: prayer and the sacraments. Prayer is our direct appeal to God's grace. The sacraments—especially Penance and the Eucharist—are channels of grace that heal us and strengthen us. When we fall in sin, the sacrament of Reconciliation offers us the mercy and restoration we desperately need.
+                        </p>
+                        <h3>Growing in Holiness</h3>
+                        <p>
+                            The goal of the spiritual life is not merely to avoid sin, but to grow in love of God and neighbor. It is to become a saint—a person transformed by grace into the image of Christ. This is not a goal reserved for a select few, but the universal call to holiness that belongs to every baptized Christian.
+                        </p>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                        <p>
+                            The spiritual combat is real, but so is God's grace. As we engage in this struggle, let us take confidence in the words of St. Paul: "I can do all things through Christ who strengthens me" (Phil 4:13). With prayer, sacraments, virtue, and the support of the Church and the communion of Saints, we can indeed prevail and grow ever closer to holiness.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 'saints-intercession',
+                title: 'The Communion of Saints: Living Connection Across Heaven and Earth',
+                category: 'Marian Devotion',
+                topic: 'marian',
+                date: 'March 5, 2026',
+                readTime: '8 min read',
+                excerpt: 'The communion of saints is a living reality that connects us to those who have gone before us. Through their intercession, we are supported in our journey toward heaven.',
+                content: `
+                    <div class="essay-header">
+                        <h1>The Communion of Saints: Living Connection Across Heaven and Earth</h1>
+                        <div class="essay-meta">March 5, 2026 • 8 min read</div>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                    </div>
+                    <div class="essay-body">
+                        <p>
+                            When we recite the Nicene Creed, we profess belief in "the communion of saints"—a phrase that encapsulates one of the most beautiful and comforting doctrines of the Catholic faith. Yet many Catholics pass over these words without fully grasping their profound meaning. What is the communion of saints? How does it affect our daily lives? And what is the nature of our relationship with those who have died?
+                        </p>
+                        <h3>One Body in Christ</h3>
+                        <p>
+                            St. Paul teaches that the Church is the Body of Christ (1 Cor 12:12-27). But this Body is not merely the collection of living believers; it transcends the boundaries of death. It includes the Church Militant (those of us still pilgrims on earth), the Church Suffering (those in purgatory), and the Church Triumphant (those in heaven). All are united in Christ, all are members of His Body.
+                        </p>
+                        <h3>Intercession of the Saints</h3>
+                        <p>
+                            One of the great fruits of the communion of saints is the intercession of the saints in heaven. Those who have lived holy lives and are now in heaven do not cease to care for the Church on earth. Rather, in the presence of God, they continue to pray for us and to intercede for our needs. They are our advocates before the throne of God.
+                        </p>
+                        <p>
+                            This is why the Catholic tradition of asking for the prayers of the saints is not contrary to Scripture but consistent with it. We ask for the prayers of those in heaven just as we ask for the prayers of our friends on earth. The difference is that those in heaven, being in the presence of God and freed from the limitations of earthly existence, can pray for us with a clarity and power we cannot fully imagine.
+                        </p>
+                        <h3>Following Their Example</h3>
+                        <p>
+                            The saints are not merely intercessors; they are also models and teachers. In their lives, we see holiness made concrete. We see how faith can be lived in different times, places, and circumstances. St. Francis shows us the beauty of poverty and creation; St. Teresa of Calcutta shows us the face of Christ in the poorest of the poor; St. Thomas More shows us how to maintain integrity even at cost to our careers and lives.
+                        </p>
+                        <h3>A Living Communion</h3>
+                        <p>
+                            The communion of saints is not a doctrine about the distant past or the distant future; it is a present reality. Right now, as you read these words, the communion of saints surrounds us. Those whom we loved and have lost are not cut off from us. The veil between heaven and earth is, in a sense, permeable. We can ask for their prayers; we can emulate their virtues; and in prayer and in the sacraments, we remain intimately connected to them.
+                        </p>
+                        <div class="catholic-motif">✦ ✝️ ✦</div>
+                        <p>
+                            This is one of the greatest consolations of the Catholic faith. We do not journey alone. We are accompanied by a great cloud of witnesses (Heb 12:1), by the prayers of the saints, and by the grace of Christ. In the communion of saints, the boundaries between earth and heaven begin to dissolve, and we glimpse the eternal reality of the Church united in Christ across all time and space.
+                        </p>
+                    </div>
+                `
+            }
+        ];
+
+        // Display essays grid
+        function displayEssays(topic = 'all') {
+            const container = document.getElementById('essaysGrid');
+            container.innerHTML = '';
+
+            essays.forEach(essay => {
+                if (topic === 'all' || essay.topic === topic) {
+                    const card = document.createElement('div');
+                    card.className = 'essay-card';
+                    card.innerHTML = `
+                        <span class="essay-card-category">${essay.category}</span>
+                        <h3>${essay.title}</h3>
+                        <div class="essay-meta">${essay.date} • ${essay.readTime}</div>
+                        <p>${essay.excerpt}</p>
+                        <a href="#" onclick="showEssay('${essay.id}')">Read More →</a>
+                    `;
+                    container.appendChild(card);
+                }
+            });
+        }
+
+        // Show full essay
+        function showEssay(id) {
+            const essay = essays.find(e => e.id === id);
+            if (essay) {
+                document.getElementById('essayContent').innerHTML = essay.content;
+                showPage('essay-reader');
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Back to essays
+        function backToEssays() {
+            showPage('essays');
+            window.scrollTo(0, 0);
+        }
+
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeLink = document.querySelector(`[data-page="${pageId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+
+            // Close mobile menu
+            document.getElementById('navLinks').classList.remove('active');
+        }
+
+        // Navigation click handlers
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.getAttribute('data-page');
+                showPage(page);
+            });
+        });
+
+        // Hamburger menu toggle
+        document.getElementById('hamburger').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // Topic filter
+        document.querySelectorAll('.topic-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                const topic = e.target.getAttribute('data-topic');
+                displayEssays(topic);
+            });
+        });
+
+        // Contact form submission
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            // In a real application, this would send data to a server
+            alert(`Thank you, ${data.name}! Your message has been received. I will respond to you shortly at ${data.email}.`);
+            e.target.reset();
+        }
+
+        // Initialize essays on page load
+        window.addEventListener('load', () => {
+            displayEssays();
+        });
+    </script>
+</body>
+</html>
