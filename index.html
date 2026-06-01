@@ -426,6 +426,99 @@
             margin-bottom: 2rem;
         }
 
+        /* Password Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 2rem;
+            border: 1px solid var(--accent-gold);
+            border-radius: 5px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            color: var(--primary-burgundy);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-form input {
+            padding: 0.8rem;
+            border: 2px solid var(--accent-gold);
+            border-radius: 3px;
+            font-family: Georgia, serif;
+            font-size: 1rem;
+        }
+
+        .modal-form input:focus {
+            outline: none;
+            border-color: var(--primary-burgundy);
+            box-shadow: 0 0 10px rgba(107, 62, 58, 0.1);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 3px;
+            font-family: Georgia, serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-submit {
+            background-color: var(--primary-burgundy);
+            color: #fff;
+        }
+
+        .modal-btn-submit:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .modal-btn-cancel {
+            background-color: #ddd;
+            color: var(--text-dark);
+        }
+
+        .modal-btn-cancel:hover {
+            background-color: #bbb;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
         /* Essay Reading View */
         .essay-reading {
             background: #fff;
@@ -525,7 +618,8 @@
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             padding: 1rem;
             border: 2px solid var(--accent-gold);
             border-radius: 3px;
@@ -540,7 +634,8 @@
         }
 
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary-burgundy);
             box-shadow: 0 0 10px rgba(107, 62, 58, 0.1);
@@ -671,6 +766,10 @@
             .container {
                 padding: 1rem;
             }
+
+            .modal-content {
+                width: 90%;
+            }
         }
 
         @media (max-width: 480px) {
@@ -729,6 +828,21 @@
         </div>
     </nav>
 
+    <!-- Password Modal -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Admin Access</div>
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            <form class="modal-form" onsubmit="handlePasswordSubmit(event)">
+                <input type="password" id="passwordInput" placeholder="Enter password" required autofocus>
+                <div class="modal-buttons">
+                    <button type="submit" class="modal-btn modal-btn-submit">Submit</button>
+                    <button type="button" class="modal-btn modal-btn-cancel" onclick="closePasswordModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- HOME PAGE -->
     <div id="home" class="page active">
         <div class="container">
@@ -781,7 +895,7 @@
 
             <!-- Add Essay Button -->
             <div style="text-align: center; margin-bottom: 2rem;">
-                <button class="add-essay-btn" onclick="navigateTo('add-essay')">+ Add New Essay</button>
+                <button class="add-essay-btn" onclick="openPasswordModal()">+ Add New Essay</button>
             </div>
 
             <!-- Topics Filter -->
@@ -803,7 +917,6 @@
             <div id="emptyState" class="empty-state" style="display: none;">
                 <div class="empty-state-icon">📝</div>
                 <p class="empty-state-text">No essays yet. Start sharing your faith and reflections.</p>
-                <button class="add-essay-btn" onclick="navigateTo('add-essay')">+ Write Your First Essay</button>
             </div>
         </div>
     </div>
@@ -888,7 +1001,7 @@
                     </div>
                     <div class="form-group">
                         <label for="essayCategory">Category</label>
-                        <select id="essayCategory" name="essayCategory" style="padding: 1rem; border: 2px solid var(--accent-gold); border-radius: 3px; font-family: Georgia, serif; font-size: 1rem; color: var(--text-dark);" required>
+                        <select id="essayCategory" name="essayCategory" required>
                             <option value="">Select a category</option>
                             <option value="marian">Marian Devotion</option>
                             <option value="sacraments">The Sacraments</option>
@@ -930,6 +1043,10 @@
     <script>
         // Essays Data - Start empty
         let essays = [];
+        let isAuthenticated = false;
+
+        // IMPORTANT: Change this to your desired password
+        const ADMIN_PASSWORD = "faith2026";
 
         // Load essays from localStorage
         function loadEssays() {
@@ -961,10 +1078,54 @@
             return categories[topic] || topic;
         }
 
+        // Password Modal Functions
+        function openPasswordModal() {
+            event.preventDefault();
+            document.getElementById('passwordModal').style.display = 'block';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            isAuthenticated = false;
+        }
+
+        function handlePasswordSubmit(event) {
+            event.preventDefault();
+            const password = document.getElementById('passwordInput').value;
+
+            if (password === ADMIN_PASSWORD) {
+                isAuthenticated = true;
+                closePasswordModal();
+                navigateTo('add-essay');
+            } else {
+                const errorMsg = document.getElementById('errorMessage');
+                errorMsg.textContent = 'Incorrect password. Please try again.';
+                errorMsg.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('passwordModal');
+            if (event.target === modal) {
+                closePasswordModal();
+            }
+        }
+
         // Navigate to pages
         function navigateTo(pageId) {
             event.preventDefault();
-            
+
+            // Check if trying to access add-essay page without authentication
+            if (pageId === 'add-essay' && !isAuthenticated) {
+                openPasswordModal();
+                return;
+            }
+
             // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -1023,7 +1184,7 @@
         // Show essay
         function showEssay(essayId) {
             event.preventDefault();
-            
+
             const essay = essays.find(e => e.id === essayId);
             if (!essay) return;
 
@@ -1035,7 +1196,7 @@
                     <div class="catholic-motif">✦ ✝️ ✦</div>
                 </div>
                 <div class="essay-body">
-                    ${essay.content.split('\n').map(para => `<p>${para}</p>`).join('')}
+                    ${essay.content.split('\n').map(para => para.trim() ? `<p>${para}</p>` : '').join('')}
                     <div class="catholic-motif">✦ ✝️ ✦</div>
                 </div>
             `;
@@ -1065,6 +1226,9 @@
 
             // Show success message
             alert('Essay published successfully!');
+
+            // Reset authentication
+            isAuthenticated = false;
 
             // Navigate to essays page
             navigateTo('essays');
